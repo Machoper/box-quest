@@ -12,12 +12,19 @@ server.use(cors());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
+import searchRouter from './routes/search.js';
+
+
 if (process.env.NODE_ENV === 'production') {
     server.use(express.static('frontend/build'));
     server.get('*', (req, res) => {
         req.sendFile(path.resolve(__dirname, 'frontend/build', 'index.html'));
     });
 } else {
+	server.use('/search', searchRouter);
+	// server.get('/search', function(req, res, next) {
+	// 	res.json('respond with a resource');
+	// });
     server.get('*', (req, res) => {
         res.json('hello');
     });
