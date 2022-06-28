@@ -5,7 +5,7 @@ import stackOverflowApiHandler from '../handlers/stackOverflow.js';
 var router = express.Router();
 
 const API_HANDLERS = {
-	// confluence: confluenceApiHandler,
+	confluence: confluenceApiHandler,
 	['stack-overflow']: stackOverflowApiHandler,
 };
 
