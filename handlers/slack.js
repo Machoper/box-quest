@@ -1,32 +1,27 @@
-import express from 'express';
-import app from '@slack/web-api';
-import {WebClient, LogLevel} from '@slack/web-api';
-var router = express.Router();
+// Use the slack api to search through all messages within a particular workspace using a query as a parameter.
 
-const client = new WebClient("xoxb-3728658353141-3731536397859-S8V2qaYw2ct7phFjPUGmaMeo", {logLevel: LogLevel.DEBUG,});
+import axios from 'axios';
+import { SearchResult } from '../models/search-result';
+import { SearchResultType } from '../models/search-result-type';
 
-const slackSearchHandler = () => {
-	const slackRes = []
-    server.post('/api/search/slack', (req, res) => {
-        const text = req.body.searchText;
-        console.log(text);
-      
-        async function findQuery(q) {
-          try {
-            // Call the search.messages using the built-in WebClient
-            const result = await app.client.search.messages({
-              // The token you used to initialize your app
-              token:
-                "xoxp-3728658353141-3731525919715-3725745084550-8b884c964f84e3fa2d59472713fe9a41",
-              query: q,
-            });
-      
-            console.log(result);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      });
+export const slackSearchHandler = async (query) => {
+
+    const slackToken = process.env.SLACK_USER_ACCESS_TOKEN;
+    const slackWorkspace = "testspace-qch6091.slack.com";
+    const slackUrl = `https://slack.com/api/search.messages?token=${slackToken}&query=${query}&pretty=1&count=10&channel=${slackWorkspace}`;
+
+    const response = await axios.get(slackUrl);
+    const results = response.data.messages.matches.map(match => {
+        const result = new SearchResult();
+        result.type = SearchResultType.Slack;
+        result.title = match.text;
+        result.link = match.url;
+        return result;
+    }).filter(result => result.title !== '');
+
+    return results;
 }
 
-export default slackSearchHandler;
+
+
+
