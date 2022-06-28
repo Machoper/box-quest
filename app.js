@@ -21,38 +21,12 @@ if (process.env.NODE_ENV === 'production') {
         req.sendFile(path.resolve(__dirname, 'frontend/build', 'index.html'));
     });
 } else {
-	server.use('/search', searchRouter);
-	// server.get('/search', function(req, res, next) {
-	// 	res.json('respond with a resource');
-	// });
     server.get('*', (req, res) => {
         res.json('hello');
     });
 }
 
-server.post('/api/search/stack-overflow', (req, res) => {
-    const searchText = req.body.searchText;
-    console.log(searchText);
-    const team = 'stackoverflow.com/c/enterprise-at-box';
-    const key = process.env.STACK_OVERFLOW_KEY;
-    const accessToken = process.env.STACK_OVERFLOW_ACCESS_TOKEN;
-    const url = `https://api.stackexchange.com/2.3/search/excerpts?order=desc&sort=activity&title=${searchText}&site=stackoverflow&key=${key}&team=${team}`;
-    const config = {
-        headers: {
-            'X-API-Access-Token': accessToken
-        }
-    };
-    axios.get(url, config).then((response) => {
-        const data = response.data;
-        data.items.forEach(item => {
-            if (item.item_type === 'question') {
-                const qid = item.question_id;
-                item.link = `https://stackoverflow.com/c/enterprise-at-box/questions/${qid}`;
-            }
-        });
-        res.json(data);
-    });
-});
+server.use('/api/search', searchRouter);
 
 const port = process.env.PORT || 5000;
 
