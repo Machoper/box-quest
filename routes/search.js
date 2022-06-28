@@ -12,7 +12,9 @@ const API_HANDLERS = {
 const MAX_RESULTS = 25;
 
 const getResponse = (search, appNames) => {
-	return Promise.all(Object.keys(API_HANDLERS).filter(key => appNames.includes(key)).map(name => API_HANDLERS[name]()));
+	return Promise.all(Object.keys(API_HANDLERS).filter(key => appNames.includes(key)).map(name => API_HANDLERS[name]().then(results => {
+		return {name, results};
+	})));
 }
 
 /* GET search results */
