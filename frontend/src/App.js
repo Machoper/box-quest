@@ -53,7 +53,7 @@ function App() {
     <div className="App">
 		<Search value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyPress={handleKeyPress}/>
 		<Tabs value={tabIndex}>
-			{ data.map(({name, results}, index) => <Tab key={index} onClick={() => setTabIndex(index)} label={name} />)}
+			{ data.map(({name, results}, index) => <Tab key={index} onClick={() => setTabIndex(index)} label={`${name} (${results.length})`} />)}
 		</Tabs>
 		{ data.map(({name, results}, index) => {
 			console.log('results', data, name, results);
