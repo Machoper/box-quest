@@ -15,13 +15,22 @@ const stackOverflowApiHandler = async (searchText) => {
 	};
 	return axios.get(url, config).then((response) => {
 		const data = response.data;
-		data.items.forEach(item => {
+		data.items.filter(item => item.item_type === 'question').forEach(item => {
 			if (item.item_type === 'question') {
 				const qid = item.question_id;
-				item.link = `https://stackoverflow.com/c/enterprise-at-box/questions/${qid}`;
+				item.url = `https://stackoverflow.com/c/enterprise-at-box/questions/${qid}`;
 			}
 		});
-		return data.items
+		return data.items.filter(item => item.item_type === 'question').map(item => {
+			return {
+				title: item.title,
+				url: item.url,
+				text: item.excerpt,
+				payload: item,
+				avatar_url: "https://cdn.worldvectorlogo.com/logos/stack-overflow.svg",
+				rank: Math.floor(Math.random() * (100 - 85 + 1) + 85)
+			}
+		})
 	});
 }
 

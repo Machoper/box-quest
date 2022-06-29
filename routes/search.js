@@ -2,6 +2,7 @@ import express from 'express';
 import confluenceApiHandler from '../handlers/confluence.js';
 import stackOverflowApiHandler from '../handlers/stackOverflow.js';
 import boxNotesSearchHandler from '../handlers/boxNotes.js';
+import slackSearchHandler from "../handlers/slack.js";
 
 var router = express.Router();
 
@@ -9,6 +10,7 @@ const API_HANDLERS = {
 	confluence: confluenceApiHandler,
 	['stack-overflow']: stackOverflowApiHandler,
 	['box-notes']: boxNotesSearchHandler,
+	slack: slackSearchHandler,
 };
 
 const MAX_RESULTS = 25;

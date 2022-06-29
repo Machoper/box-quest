@@ -45,7 +45,6 @@ const boxNotesSearchHandler = async (search) => {
 			{
 				content_types: ['file_content', 'name', 'description'],
 				file_extensions: 'boxnote',
-				limit: 25,
 				offset: 0
 			})
 
@@ -53,12 +52,13 @@ const boxNotesSearchHandler = async (search) => {
 		return {
 			source: "box_notes",
 			title: result.name,
-			text: `Lorem ipsum`,
+			text: result.description,
 			url: `https://cloud.app.box.com/notes/${result.id}`,
 			author: result.owned_by.name,
 			date: result.modified_at,
-			avatar_url: null,
-			payload: result
+			avatar_url: "https://static.macupdate.com/products/58608/m/box-notes-logo.png?v=1568334105",
+			payload: result,
+			rank: Math.floor(Math.random() * (100 - 85 + 1) + 85)
 		}
 	})
 
