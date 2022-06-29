@@ -21,7 +21,7 @@ const stackOverflowApiHandler = (searchText) => {
 				item.link = `https://stackoverflow.com/c/enterprise-at-box/questions/${qid}`;
 			}
 		});
-		return data
+		return data.items
 	});
 }
 
