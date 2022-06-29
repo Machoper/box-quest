@@ -15,19 +15,19 @@ function TabPanel(props) {
 	const { children, value, index, ...other } = props;
 
 	return (
-			<div
-					role="tabpanel"
-					hidden={value !== index}
-					id={`simple-tabpanel-${index}`}
-					aria-labelledby={`simple-tab-${index}`}
-					{...other}
-			>
-				{value === index && (
-						<Box sx={{ p: 3 }}>
-							{children}
-						</Box>
-				)}
-			</div>
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && (
+				<Box sx={{ p: 3 }}>
+					{children}
+				</Box>
+			)}
+		</div>
 	);
 }
 
@@ -43,36 +43,40 @@ function App() {
 
 	function handleSearch() {
 		axios.post('/api/search', {searchText: searchText})
-				.then(resp => {
-					console.log('resp', resp.data);
-					setData(resp.data);
-				});
+			.then(resp => {
+				console.log('resp', resp.data);
+				setData(resp.data);
+			});
 
 	}
   return (
     <div className="App">
 		<Search value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyPress={handleKeyPress}/>
+		<div className="content">
 		<Tabs value={tabIndex}>
 			{ data.map(({name, results}, index) => <Tab key={index} onClick={() => setTabIndex(index)} label={`${name} (${results.length})`} />)}
 		</Tabs>
 		{ data.map(({name, results}, index) => {
-			console.log('results', data, name, results);
 			return (
-					<TabPanel value={tabIndex} index={index}>
-						<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-							{ [...results].map((result, index) => {
-								return (
-										<ListItem key={index}>
-											<ListItemButton>{result.body}</ListItemButton>
-											{/*<ListItemText primary={name} />*/}
-										</ListItem>
-								)
-							})}
-
-						</List>
-					</TabPanel>
+				<TabPanel value={tabIndex} index={index}>
+					<List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+						{ [...results].map((result, index) => {
+							return (
+								<ListItem key={index}>
+									<ListItemButton>
+										<div className="list-item-content">
+											<div className="list-item-title">{result.title}</div>
+											<div className="list-item-text">{result.body}</div>
+										</div>
+									</ListItemButton>
+								</ListItem>
+							)
+						})}
+					</List>
+				</TabPanel>
 			)
 		})}
+		</div>
     </div>
   );
 }
