@@ -44,11 +44,12 @@ function App() {
 	function handleSearch() {
 		axios.post('/api/search', {searchText: searchText})
 			.then(resp => {
-				console.log('resp', resp.data);
 				setData(resp.data);
 			});
 
 	}
+
+	console.log('searchText', searchText);
   return (
     <div className="App">
 		<Search value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyPress={handleKeyPress}/>
@@ -66,7 +67,7 @@ function App() {
 									<ListItemButton>
 										<div className="list-item-content">
 											<div className="list-item-title">{result.title}</div>
-											<div className="list-item-text">{result.body}</div>
+											<div className="list-item-text">{result.body || result.text}</div>
 										</div>
 									</ListItemButton>
 								</ListItem>

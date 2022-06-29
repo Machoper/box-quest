@@ -63,7 +63,7 @@ const boxNotesSearchHandler = async (search) => {
 	})
 
 	return new Promise((resolve, reject) => {
-		resolve(searchResult);
+		resolve(searchResults);
 	})
 }
 
