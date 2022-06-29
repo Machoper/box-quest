@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "heroku-postbuild": "cd frontend && yarn install && yarn run build",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
     "frontend": "yarn --cwd frontend run start",
     "server": "nodemon app",
     "start-dev": "concurrently \"yarn run server\" \"yarn run frontend\""

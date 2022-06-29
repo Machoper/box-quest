@@ -3,7 +3,7 @@ import express from 'express';
 
 var router = express.Router();
 
-const stackOverflowApiHandler = (searchText) => {
+const stackOverflowApiHandler = async (searchText) => {
 	const team = 'stackoverflow.com/c/enterprise-at-box';
 	const key = process.env.STACK_OVERFLOW_KEY;
 	const accessToken = process.env.STACK_OVERFLOW_ACCESS_TOKEN;
