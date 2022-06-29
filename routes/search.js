@@ -1,12 +1,14 @@
 import express from 'express';
 import confluenceApiHandler from '../handlers/confluence.js';
 import stackOverflowApiHandler from '../handlers/stackOverflow.js';
+import boxNotesSearchHandler from '../handlers/boxNotes.js';
 
 var router = express.Router();
 
 const API_HANDLERS = {
 	confluence: confluenceApiHandler,
 	['stack-overflow']: stackOverflowApiHandler,
+	['box-notes']: boxNotesSearchHandler,
 };
 
 const MAX_RESULTS = 25;
