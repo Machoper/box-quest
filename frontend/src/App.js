@@ -64,7 +64,7 @@ function App() {
 						{ [...results].map((result, index) => {
 							return (
 								<ListItem key={index}>
-									<ListItemButton>
+									<ListItemButton onClick={()=> window.open(result.url, "_blank")}>
 										<div className="list-item-content">
 											<div className="list-item-title">{result.title}</div>
 											<div className="list-item-text">{result.body || result.text}</div>
